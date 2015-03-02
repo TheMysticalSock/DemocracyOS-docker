@@ -1,0 +1,21 @@
+mongo:
+    image: mongo:latest
+    ports:
+        - "27017"
+dos:
+    build: ./democracyos
+    links:
+        - mongo
+        - notifier
+    ports:
+        - "3000:3000"
+    volumes:
+        - ./democracyos/app /app
+notifier:
+    build: ./notifier
+    links:
+        - mongo
+    ports:
+        - "9001"
+    volumes:
+        - ./notifier/app /app
